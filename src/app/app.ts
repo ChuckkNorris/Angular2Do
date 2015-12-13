@@ -93,7 +93,7 @@ class AppComponent {
         if (this.selectedVehicle.weight < 2000)
             this.weightMessage = "Super light yo";
         else {
-            this.weightMessage = "Heavy bro";
+            this.weightMessage = "Heavy bro"; 
         }
     }
 }
