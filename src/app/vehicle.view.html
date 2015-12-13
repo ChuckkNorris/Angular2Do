@@ -1,17 +1,30 @@
-  <h2>My Garage</h2>
+    <h2>My Garage</h2>
     <ul class="vehicles">
         <!--* means Element and Children constitute master template-->
         <!--#vehicle indicates local template variable-->
-        <li *ng-for="#vehicle of vehicles" (click)="onSelect(vehicle)">
+        <li *ng-for="#vehicle of vehicles" 
+            (click)="onSelect(vehicle)" 
+            [ng-class]="getSelectedClass(vehicle)">
             <span class="badge">{{vehicle.make}}</span> {{vehicle.name}}
         </li>
     </ul>
     
     <h1>{{title}}</h1>
-    <h2>{{selectedVehicle.name}}</h2>
-    <label>Name</label>
+    <div *ng-if="selectedVehicle">
+        <h2>{{selectedVehicle.name}}</h2>
+        <label>Name</label>
         <div>
             <input [(ng-model)]="selectedVehicle.name" placeholder="name">
-            {{selectedVehicle.name}}
         </div>
-    <h2> {{selectedVehicle.horsePower}} hp, {{selectedVehicle.weight}} lbs, {{selectedVehicle.powerToWeightRatio}} lbs/hp</h2>
+        <label>Horse Power</label>
+        <div>
+            <input [(ng-model)]="selectedVehicle.horsePower" placeholder="e.g. 264">
+        </div>
+
+        <label>Curb Weight (lbs)</label>
+        <div>
+            <input (keyup)="getMessage()" [(ng-model)]="selectedVehicle.weight" placeholder="e.g. 3064">
+        </div>
+        <label>{{weightMessage}}</label>
+        <h2> {{selectedVehicle.horsePower}} hp, {{selectedVehicle.weight}} lbs, {{selectedVehicle.powerToWeightRatio}} lbs/hp</h2>
+    </div>

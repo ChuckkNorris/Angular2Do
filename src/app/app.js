@@ -28,6 +28,7 @@ var Vehicle = (function () {
 })();
 var AppComponent = (function () {
     function AppComponent() {
+        // API Calls?
         this.title = "Vehicle Details";
         this.vehicles = VEHICLES;
     }
@@ -48,12 +49,8 @@ var AppComponent = (function () {
         angular2_1.Component({
             selector: 'my-app',
             directives: [angular2_1.FORM_DIRECTIVES, [angular2_1.CORE_DIRECTIVES]],
-            styles: ["\n        .vehicles {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}\n        .vehicles li { cursor: pointer; position: relative; left: 0; transition: all 0.2s ease; }\n        .vehicles li:hover {color: #369; background-color: #EEE; left: .2em;}\n        .vehicles .badge {\n            font-size: small;\n            color: white;\n            padding: 0.1em 0.7em;\n            background-color: #369;\n            line-height: 1em;\n            position: relative;\n            left: -1px;\n            top: -1px;\n        }\n        .green { background-color: #ABCABC; }\n        .selected { background-color: #05E671; color: #0649BD; }\n    "],
-            //   templateUrl: 'vehicle.view.html',
-            // MultiLine templates by using tilde key
-            // {{OneWayBindingModel}} (UI Changes do not set underlying property value)
-            // [(ng-model)]="TwoWayDataBindingModel"
-            template: "\n    <h2>My Garage</h2>\n    <ul class=\"vehicles\">\n        <!--* means Element and Children constitute master template-->\n        <!--#vehicle indicates local template variable-->\n        <li *ng-for=\"#vehicle of vehicles\" \n            (click)=\"onSelect(vehicle)\" \n            [ng-class]=\"getSelectedClass(vehicle)\">\n            <span class=\"badge\">{{vehicle.make}}</span> {{vehicle.name}}\n        </li>\n    </ul>\n    \n    <h1>{{title}}</h1>\n    <div *ng-if=\"selectedVehicle\">\n        <h2>{{selectedVehicle.name}}</h2>\n        <label>Name</label>\n        <div>\n            <input [(ng-model)]=\"selectedVehicle.name\" placeholder=\"name\">\n        </div>\n        <label>Horse Power</label>\n        <div>\n            <input [(ng-model)]=\"selectedVehicle.horsePower\" placeholder=\"e.g. 264\">\n        </div>\n\n        <label>Curb Weight (lbs)</label>\n        <div>\n            <input (keyup)=\"getMessage()\" [(ng-model)]=\"selectedVehicle.weight\" placeholder=\"e.g. 3064\">\n        </div>\n        <label>{{weightMessage}}</label>\n        <h2> {{selectedVehicle.horsePower}} hp, {{selectedVehicle.weight}} lbs, {{selectedVehicle.powerToWeightRatio}} lbs/hp</h2>\n    </div>\n    "
+            styleUrls: ['./app/styles.css'],
+            templateUrl: 'app/vehicle.view.html'
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
