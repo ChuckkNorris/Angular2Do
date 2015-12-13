@@ -1,5 +1,6 @@
-import {bootstrap, Component, FORM_DIRECTIVES, NgFor} from 'angular2/angular2';
-// {NgModel}
+import {bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from 'angular2/angular2';
+// FORM_DIRECTIVES = [NgModel, ...]
+// CORE_DIRECTIVES = [ NgFor, NgIf, NgClass, ...]
 class Vehicle {
     constructor(make: string, name: string, horsePower: number, weightInPounds: number) {
         this.make = make;
@@ -15,13 +16,11 @@ class Vehicle {
     public get powerToWeightRatio() : number {
         return parseFloat((this.weight / this.horsePower).toPrecision(2));
     }
-    
-        
 }
 
 @Component({
     selector: 'my-app',
-    directives: [FORM_DIRECTIVES, NgFor],
+    directives: [FORM_DIRECTIVES, [CORE_DIRECTIVES]],
     styles:[`
         .vehicles {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}
         .vehicles li { cursor: pointer; position: relative; left: 0; transition: all 0.2s ease; }
@@ -36,40 +35,67 @@ class Vehicle {
             left: -1px;
             top: -1px;
         }
-        .selected { background-color: #EEE; color: #369; }
-`],
-
+        .green { background-color: #ABCABC; }
+        .selected { background-color: #05E671; color: #0649BD; }
+    `],
+ //   templateUrl: 'vehicle.view.html',
     // MultiLine templates by using tilde key
-    // {{OneWayBinding}}
-    // [(ng-model)]="TwoWayDataBinding"
+    // {{OneWayBindingModel}} (UI Changes do not set underlying property value)
+    // [(ng-model)]="TwoWayDataBindingModel"
+
     template: `
     <h2>My Garage</h2>
     <ul class="vehicles">
         <!--* means Element and Children constitute master template-->
         <!--#vehicle indicates local template variable-->
-        <li *ng-for="#vehicle of vehicles" (click)="onSelect(vehicle)">
+        <li *ng-for="#vehicle of vehicles" 
+            (click)="onSelect(vehicle)" 
+            [ng-class]="getSelectedClass(vehicle)">
             <span class="badge">{{vehicle.make}}</span> {{vehicle.name}}
         </li>
     </ul>
     
     <h1>{{title}}</h1>
-    <h2>{{selectedVehicle.name}}</h2>
-    <label>Name</label>
+    <div *ng-if="selectedVehicle">
+        <h2>{{selectedVehicle.name}}</h2>
+        <label>Name</label>
         <div>
             <input [(ng-model)]="selectedVehicle.name" placeholder="name">
-            {{selectedVehicle.name}}
         </div>
-    <h2> {{selectedVehicle.horsePower}} hp, {{selectedVehicle.weight}} lbs, {{selectedVehicle.powerToWeightRatio}} lbs/hp</h2>
+        <label>Horse Power</label>
+        <div>
+            <input [(ng-model)]="selectedVehicle.horsePower" placeholder="e.g. 264">
+        </div>
+
+        <label>Curb Weight (lbs)</label>
+        <div>
+            <input (keyup)="getMessage()" [(ng-model)]="selectedVehicle.weight" placeholder="e.g. 3064">
+        </div>
+        <label>{{weightMessage}}</label>
+        <h2> {{selectedVehicle.horsePower}} hp, {{selectedVehicle.weight}} lbs, {{selectedVehicle.powerToWeightRatio}} lbs/hp</h2>
+    </div>
     `
 })
 
 
 class AppComponent {
     public title = "Vehicle Details";
-    public selectedVehicle = new Vehicle("BMW", "E30 M3", 192, 2700);
     public vehicles = VEHICLES;
+    public selectedVehicle: Vehicle; //= new Vehicle("BMW", "E30 M3", 192, 2700);
+    public weightMessage: string;
     onSelect(vehicle: Vehicle) { this.selectedVehicle = vehicle}
-  
+    getSelectedClass(vehicle: Vehicle){
+        // Adds the 'selected' class if the element's bound vehicle is the selectedVehicle
+        // Removes the class if not (Two Way class binding)
+        return {'selected': vehicle == this.selectedVehicle  };
+    }
+    getMessage(){
+        if (this.selectedVehicle.weight < 2000)
+            this.weightMessage = "Super light yo";
+        else {
+            this.weightMessage = "Heavy bro";
+        }
+    }
 }
 var VEHICLES: Vehicle[] = [
     new Vehicle("BMW", "E30 M3", 192, 2700),
