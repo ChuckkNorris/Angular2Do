@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc -p src -w",
-    "start": "live-server --open=src"
+    "tsc": "tsc --sourcemap -p app -w",
+    "start": "live-server --open=app"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +17,12 @@
     "live-server": "^0.8.2",
     "typescript": "^1.7.3"
   },
-  "description": ""
+  "description": "",
+  "jspm": {
+    "directories": {
+      "baseURL": "app"
+    },
+    "dependencies": {},
+    "devDependencies": {}
+  }
 }

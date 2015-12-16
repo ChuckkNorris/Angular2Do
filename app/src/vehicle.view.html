@@ -23,8 +23,10 @@
 
         <label>Curb Weight (lbs)</label>
         <div>
-            <input (keyup)="getMessage()" [(ng-model)]="selectedVehicle.weight" placeholder="e.g. 3064">
+            <!-- (keydown.capslock)="onCapsPressed(event)" --> 
+            <!-- (keydown.enter)="getMessage()" -->
+            <input (keydown.enter)="getMessage()" [(ng-model)]="selectedVehicle.weight" placeholder="e.g. 3064">
         </div>
-        <label>{{weightMessage}}</label>
+        <label>{{message}}</label>
         <h2> {{selectedVehicle.horsePower}} hp, {{selectedVehicle.weight}} lbs, {{selectedVehicle.powerToWeightRatio}} lbs/hp</h2>
     </div>

@@ -1,0 +1,23 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch Vehicles",
+			"type": "node",	
+			"program": "app/src/app.ts",
+			"sourceMaps": true,
+			
+			"stopOnEntry": false,
+			"outDir": "app/bin"
+			
+			
+			
+		},
+		{
+			"name": "Attach",
+			"type": "node",
+			"request": "attach",
+			"port": 5858
+		}
+	]
+}
